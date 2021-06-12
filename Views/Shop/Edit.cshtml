@@ -1,0 +1,31 @@
+﻿@model WeedStore.Models.Goods.GoodsModel
+
+<div class="container">
+    <form asp-controller="Shop" asp-action="Edit" method="post">
+        <label asp-for="Name">
+            Name
+        </label>
+        <input asp-for="Name" value="@Model.Name" />
+        <label asp-for="Count">
+            Count
+        </label>
+        <input asp-for="Count" value="@Model.Count" />
+        <label asp-for="Description">
+            Description
+        </label>
+        <input asp-for="Description" value="@Model.Description" />
+        <label asp-for="Category">
+            Category
+        </label>
+        <input asp-for="Category" value="@Model.Category" />
+        <label asp-for="Image">
+            Image
+        </label>
+        <input asp-for="Image" value="@Model.Image" />
+        <label asp-for="Price">
+            Price
+        </label>
+        <input asp-for="Price" value="@Model.Price" />
+        <input type="submit" value="Create" />
+    </form>
+</div> 

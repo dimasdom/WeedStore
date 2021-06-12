@@ -21,7 +21,9 @@ namespace WeedStore.Models.DTOs
         [MaxLength(24)]
         public string Password { get; set; }
         [Required]
-        public string VerifiedPassword { get; set; }
-
+        public string Address { get; set; }
+        [Required]
+        [DataType("UserName")]
+        public string UserName { get; set; }
     }
 }

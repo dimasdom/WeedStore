@@ -7,7 +7,13 @@ using WeedStore.Models.Goods;
 
 namespace WeedStore.MediatR.Query
 {
-    public class GetGoodsQuery:IRequest<List<GoodsModel>>
+    public class GetSingleGoodsQuery:IRequest<GoodsModel>
     {
+        public GetSingleGoodsQuery(Guid id)
+        {
+            Id = id;
+        }
+
+        public Guid Id { get; set; }
     }
 }

@@ -7,13 +7,14 @@ using WeedStore.Models.Goods;
 
 namespace WeedStore.MediatR.Command
 {
-    public class CreateGoodsCommand:IRequest<bool>
+    public class EditGoodsCommand:IRequest<GoodsModel>
     {
-        public CreateGoodsCommand(GoodsModel goods)
+        public GoodsModel NewGoods { get; set; }
+        public EditGoodsCommand(GoodsModel newGoods)
         {
-            Goods = goods;
+            NewGoods = newGoods;
         }
 
-        public GoodsModel Goods { get; set; }
+        
     }
 }

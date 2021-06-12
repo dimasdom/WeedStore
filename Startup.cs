@@ -1,15 +1,15 @@
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
+using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 using WeedStore.Models.Context;
 using WeedStore.Models.User;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace WeedStore
 {
@@ -25,15 +25,29 @@ namespace WeedStore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+); ;
             services.AddMvc();
-            services.AddDbContext<WeedStoreContext>(options=>
+            services.AddDbContext<WeedStoreContext>(options =>
             {
-                options.UseNpgsql(Configuration.GetConnectionString("PostgreSQL"));
+                options.UseSqlServer(Configuration.GetConnectionString("SQLServer"));
             });
-            services.AddIdentity<UserModel, IdentityRole>().AddEntityFrameworkStores<WeedStoreContext>();
-            services.AddAuthorization();
             services.AddMediatR(typeof(Startup));
+            //services.AddIdentityCore<UserModel>()
+            //    .AddEntityFrameworkStores<WeedStoreContext>()
+            //    .AddSignInManager<SignInManager<UserModel>>()
+            //    .AddRoles<IdentityRole>();
+
+
+
+            services.AddIdentity<UserModel, IdentityRole>()
+                .AddEntityFrameworkStores<WeedStoreContext>()
+                .AddSignInManager<SignInManager<UserModel>>()
+                .AddRoles<IdentityRole>();
+            services.AddAuthentication();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,7 +68,8 @@ namespace WeedStore
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            app.UseAuthentication();    // аутентификация
+            app.UseAuthorization();     // авторизация
             
             app.UseEndpoints(endpoints =>
             {

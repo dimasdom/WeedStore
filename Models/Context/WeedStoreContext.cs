@@ -1,12 +1,8 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using WeedStore.Models.User;
+﻿using WeedStore.Models.User;
 using WeedStore.Models.Goods;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using WeedStore.Models.Order;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace WeedStore.Models.Context
 {
@@ -17,5 +13,6 @@ namespace WeedStore.Models.Context
         }
 
         public DbSet<GoodsModel> Goods { get; set; }
+        public DbSet<OrderModel> Orders { get; set; }
     }
 }

@@ -1,5 +1,26 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model WeedStore.Models.DTOs.UserRegisterDTOs
+    <form asp-controller="Account" asp-action="Register" method="post">
+        <div class="form-group">
+
+            <label class="col-form-label" asp-for="Email"></label>
+            <input class="form-control" asp-for="Email" />
+            <span asp-validation-for="Email"></span>
+            <label asp-for="First_name"></label>
+            <input asp-for="First_name" />
+            <span asp-validation-for="First_name"></span>
+            <label asp-for="Second_name"></label>
+            <input asp-for="Second_name" />
+            <span asp-validation-for="Second_name"></span>
+            <label asp-for="Password"></label>
+            <input asp-for="Password" />
+            <span asp-validation-for="Password"></span>
+            <label asp-for="Address"></label>
+            <input asp-for="Address" />
+            <span asp-validation-for="Address"></span>
+            <label asp-for="UserName"></label>
+            <input asp-for="UserName" />
+            <span asp-validation-for="UserName"></span>
+            <input class="btn btn-primary" type="submit" value="Register" />
+
+        </div>
+    </form>

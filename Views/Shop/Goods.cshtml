@@ -1,5 +1,18 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@using WeedStore.Models.Goods
+@model List<GoodsModel> 
+<div class="container">
+    <div class="row">
+        @foreach(GoodsModel goods in Model)
+            {
+                <div class="col-3">
+                    <img src="@goods.Image" />
+                    <p>@goods.Name</p>
+                    <p>@goods.Price</p>
+                    @if (User.IsInRole("admin"))
+                {
+                    <a asp-action="Edit" asp-controller="Shop" asp-route-id="@goods.Id">Edit</a>
+                }
+                </div>
+            }
+    </div>
+</div>
