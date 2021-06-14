@@ -10,18 +10,19 @@ using WeedStore.Models.User;
 
 namespace WeedStore.MediatR.Handler
 {
-    //public class GetUserHandler : IRequestHandler<GetUsersQuery, UserModel>
-    //{
-    //    private UserManager<UserModel> _userManager;
+    public class GetUserHandler : IRequestHandler<GetUserQuery, UserModel>
+    {
+        private UserManager<UserModel> _userManager;
 
-    //    public GetUserHandler(UserManager<UserModel> userManager)
-    //    {
-    //        _userManager = userManager;
-    //    }
+        public GetUserHandler(UserManager<UserModel> userManager)
+        {
+            _userManager = userManager;
+        }
 
-    //    public async Task<UserModel> Handle(GetUsersQuery request, CancellationToken cancellationToken)
-    //    {
-    //        var Customer =  await _userManager.FindByIdAsync();
-    //    }
-    //}
+        public async Task<UserModel> Handle(GetUserQuery request, CancellationToken cancellationToken)
+        {
+            var Customer = await _userManager.FindByNameAsync(request.UserName);
+            return Customer;
+        }
+    }
 }

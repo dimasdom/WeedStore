@@ -70,5 +70,34 @@ namespace WeedStore.Controllers
             await _mediator.Send(command);
             return RedirectToAction("Goods","Shop");
         }
+        [HttpGet]
+        public async Task<IActionResult> AddToCart(string Id)
+        {
+            var command = new AddToCartCommand(User.Identity.Name,Id);
+            var result = await _mediator.Send(command);
+            return RedirectToAction("Goods","Shop");
+        }
+        [HttpGet]
+        public async Task<IActionResult> Cart()
+        {
+            var command = new GetUserCartQuery(User.Identity.Name);
+            var result = await _mediator.Send(command);
+            return View(result);
+        }
+        [HttpGet]
+        public async Task<IActionResult> DeleteFromCart(string Id)
+        {
+            var command = new DeleteGoodsFromCartCommand(User.Identity.Name,Id);
+            var result = await _mediator.Send(command);
+            return RedirectToAction("Cart", "Shop");
+        }
+        [HttpPost]
+        public async Task<IActionResult> MakeOrder([FromForm]string Address)
+        {
+            var command = new MakeOrderCommand(User.Identity.Name,Address);
+            var result = await _mediator.Send(command);
+            return RedirectToAction("Index", "Home");
+        }
+        
     }
 }

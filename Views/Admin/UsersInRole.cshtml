@@ -1,0 +1,35 @@
+﻿@using WeedStore.Models.User
+@model List<UserModel>
+<div class="container">
+    <p class="display-4 text-center">
+        Users in Role:@ViewBag.RoleName
+    </p>
+    <div class="row">
+        <form asp-action="AddUserToRole" asp-controller="Admin" method="post">
+            <input name="UserName" />
+            <input name="RoleName" value="@ViewBag.RoleName" />
+            <input type="submit" value="Add This User To Role" />
+        </form>
+    </div>
+    @foreach (UserModel user in Model)
+    {
+<form asp-action="DeleteUserFromRole" asp-controller="Admin" method="post">
+    <div class="row">
+        <div class="col-4">
+            <input name="UserId" value="@user.Id" disabled />
+            <input name="RoleName" value="@ViewBag.RoleName" disabled />
+        </div>
+        <div class="col-4">
+            <p>
+                @user.UserName
+                
+            </p>
+        </div>
+        <div class="col-4">
+            <input type="submit" value="Delete From Role" class="btn btn-danger" />
+        </div>
+    </div>
+</form>
+    }
+
+</div>

@@ -10,18 +10,19 @@ using WeedStore.Models.User;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using WeedStore.MediatR.Query;
 
 namespace WeedStore.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly IMediator _mediatR;
+        private readonly IMediator _mediator;
         private UserManager<UserModel> _userManager;
         private SignInManager<UserModel> _signInManager;
 
         public AccountController(IMediator mediatR, UserManager<UserModel> userManager, SignInManager<UserModel> signInManager)
         {
-            _mediatR = mediatR;
+            _mediator = mediatR;
             _userManager = userManager;
             _signInManager = signInManager;
         }
@@ -105,6 +106,13 @@ namespace WeedStore.Controllers
             var AccountUser = await _userManager.FindByNameAsync(User.Identity.Name);
 
             return View(AccountUser);
+        }
+        [HttpGet]
+        public async Task<IActionResult> MyOrders()
+        {
+            var query = new GetMyOrdersQuery(User.Identity.Name);
+            var result = await _mediator.Send(query);
+            return View(result);
         }
     }
 }

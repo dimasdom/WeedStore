@@ -1,0 +1,22 @@
+﻿@using WeedStore.Models.Order
+@model List<OrderModel>
+
+<div class="container">
+    @foreach(OrderModel order in Model)
+            {
+    <div class="row">
+        <div class="col">
+            @order.Id
+        </div>
+        <div class="col">
+            @order.UserId
+        </div>
+        <div class="col">
+            @order.Address
+        </div>
+        <div class="col">
+            Details
+        </div>
+    </div>
+            }
+</div>

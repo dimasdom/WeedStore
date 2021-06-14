@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace WeedStore.MediatR.Command
 {
-    public class AddToCartCommand:IRequest<bool>
+    public class DeleteGoodsFromCartCommand:IRequest<bool>
     {
-        public AddToCartCommand(string userName, string goodsId)
+        public DeleteGoodsFromCartCommand(string userName, string goodsId)
         {
             UserName = userName;
             GoodsId = goodsId;

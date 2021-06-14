@@ -1,0 +1,26 @@
+﻿@using WeedStore.Models.Goods
+@model List<GoodsModel>
+
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            @foreach(GoodsModel goods in Model)
+            {
+                <div class="row">
+                    <div class="col">
+                        @goods.Name
+                    </div>
+                    <div class="col">
+                        @goods.Price
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="col-4">
+            <form asp-action="MakeOrder" asp-controller="Shop" method="post">
+                <input name="Address" value=""/>
+                <input type="submit" value="Make Order"/>
+            </form>
+        </div>
+    </div>
+</div>

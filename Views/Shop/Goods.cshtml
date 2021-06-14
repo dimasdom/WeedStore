@@ -12,6 +12,9 @@
                 {
                     <a asp-action="Edit" asp-controller="Shop" asp-route-id="@goods.Id">Edit</a>
                 }
+                    <a asp-action="AddToCart" asp-controller="Shop" asp-route-id="@goods.Id">
+                        Add To Cart
+                    </a>
                 </div>
             }
     </div>

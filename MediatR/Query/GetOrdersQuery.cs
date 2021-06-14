@@ -7,7 +7,7 @@ using WeedStore.Models.Order;
 
 namespace WeedStore.MediatR.Query
 {
-    public class GetUsersOrdersQuery:IRequest<List<OrderModel>>
+    public class GetOrdersQuery:IRequest<List<OrderModel>>
     {
     }
 }

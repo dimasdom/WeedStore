@@ -3,18 +3,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WeedStore.Models.User;
 
 namespace WeedStore.MediatR.Command
 {
-    public class AddToCartCommand:IRequest<bool>
+    public class DeleteUserFromRoleCommand:IRequest<List<UserModel>>
     {
-        public AddToCartCommand(string userName, string goodsId)
+        public DeleteUserFromRoleCommand(string userName, string roleName)
         {
             UserName = userName;
-            GoodsId = goodsId;
+            RoleName = roleName;
         }
 
         public string UserName { get; set; }
-        public string GoodsId { get; set; }
+        public string RoleName { get; set; }
     }
 }

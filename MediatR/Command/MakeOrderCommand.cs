@@ -9,11 +9,13 @@ namespace WeedStore.MediatR.Command
 {
     public class MakeOrderCommand:IRequest<bool>
     {
-        public MakeOrderCommand(OrderModel order)
+        public MakeOrderCommand(string userName, string address)
         {
-            Order = order;
+            UserName = userName;
+            Address = address;
         }
 
-        public OrderModel Order { get; set; }
+        public string UserName { get; set; }
+        public string Address { get; set; }
     }
 }
