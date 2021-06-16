@@ -3,12 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WeedStore.Models.Order;
 
-namespace WeedStore.MediatR.Query
+namespace WeedStore.MediatR.Command
 {
-    public class GetOrdersQuery:IRequest<List<OrderModel>>
+    public class LogOutCommand:IRequest<bool>
     {
-      
     }
 }

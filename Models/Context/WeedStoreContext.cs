@@ -14,5 +14,7 @@ namespace WeedStore.Models.Context
 
         public DbSet<GoodsModel> Goods { get; set; }
         public DbSet<OrderModel> Orders { get; set; }
+        public DbSet<CategoryModel> Categories { get; set; }
+        public DbSet<CommentModel> Comments { get; set; }
     }
 }

@@ -1,26 +1,29 @@
 ﻿@model WeedStore.Models.DTOs.UserRegisterDTOs
-    <form asp-controller="Account" asp-action="Register" method="post">
-        <div class="form-group">
+    <p class="display-4 text-center mb-4">Register</p>
+    <div class="container m-auto w-50 mt-4">
 
-            <label class="col-form-label" asp-for="Email"></label>
-            <input class="form-control" asp-for="Email" />
-            <span asp-validation-for="Email"></span>
-            <label asp-for="First_name"></label>
-            <input asp-for="First_name" />
-            <span asp-validation-for="First_name"></span>
-            <label asp-for="Second_name"></label>
-            <input asp-for="Second_name" />
-            <span asp-validation-for="Second_name"></span>
-            <label asp-for="Password"></label>
-            <input asp-for="Password" />
-            <span asp-validation-for="Password"></span>
-            <label asp-for="Address"></label>
-            <input asp-for="Address" />
-            <span asp-validation-for="Address"></span>
-            <label asp-for="UserName"></label>
-            <input asp-for="UserName" />
-            <span asp-validation-for="UserName"></span>
-            <input class="btn btn-primary" type="submit" value="Register" />
+        <form asp-controller="Account" asp-action="Register" method="post">
+            <div class="input-group mb-3">
+                <input asp-for="Email" class="form-control" placeholder="Email" />
+            </div>
+            <div class="input-group mb-3">
+                <input asp-for="First_name" class="form-control" placeholder="First Name" />
+            </div>
+            <div class="input-group mb-3">
+                <input asp-for="Second_name" class="form-control" placeholder="Second Name" />
+            </div>
+            <div class="input-group mb-3">
+                <input asp-for="Password" class="form-control" placeholder="Password" />
+            </div>
+            <div class="input-group mb-3">
+                <input asp-for="Address" class="form-control" placeholder="Address" />
+            </div>
+            <div class="input-group mb-3">
+                <input asp-for="UserName" class="form-control" placeholder="Nickname" />
+            </div>
+            <div class="input-group mb-3">
+                <input class="btn btn-primary" type="submit" value="Register" />
+            </div>
 
-        </div>
-    </form>
+        </form>
+    </div>

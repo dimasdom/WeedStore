@@ -22,6 +22,7 @@ namespace WeedStore.MediatR.Handler
         {
             var GoodsToRemove = await _context.Goods.FindAsync(request.Id);
             _context.Goods.Remove(GoodsToRemove);
+             _context.SaveChanges();
             return true;
         }
     }

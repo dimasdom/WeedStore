@@ -44,16 +44,22 @@
                         }
                         @if (User.Identity.IsAuthenticated)
                         {
+                            
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Account
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="MyAccount">MyAccount</a>
+                                        <a class="dropdown-item" asp-area="" asp-controller="Shop" asp-action="Cart">Cart</a>
+                                        <a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="MyOrders">Orders</a>
+                                        <a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="LogOut">LogOut</a>
+                                    </div>
+                                </div>
+                               
+                                }
 
-                            <li class="nav-item">
-                                <a class="nav-link text-dark float-right" asp-area="" asp-controller="Account" asp-action="MyAccount">MyAccount</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark float-right" asp-area="" asp-controller="Shop" asp-action="Cart">MyAccount</a>
-                            </li>
-                        }
-
-                    </ul>
+                        </ul>
                 </div>
             </div>
         </nav>

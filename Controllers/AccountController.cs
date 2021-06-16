@@ -114,5 +114,13 @@ namespace WeedStore.Controllers
             var result = await _mediator.Send(query);
             return View(result);
         }
+        [HttpGet]
+        public async Task<IActionResult> LogOut()
+        {
+            var command = new LogOutCommand();
+            await _mediator.Send(command);
+            return RedirectToAction("Index", "Home");
+        }
+       
     }
 }

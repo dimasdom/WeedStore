@@ -1,0 +1,39 @@
+﻿@using WeedStore.Models.Goods 
+@model WeedStore.Models.DTOs.ProductModel
+<div class="containe m-auto">
+    <p class="text-center display-4">@Model.Goods.Name</p>
+    <div class="row">
+        <div class="col-6">
+            <img class="rounded shadow-lg" src="@Model.Goods.Image"/>
+        </div>
+        <div class="col-6">
+            <p>@Model.Goods.Name</p>
+            <p>@Model.Goods.Count</p>
+            <p>@Model.Goods.Description</p>
+            <p>@Model.Goods.Price</p>
+            <a asp-action="AddToCart" asp-controller="Shop" asp-route-id="@Model.Goods.Id" class="btn btn-primary">Add To Cart</a>
+        </div>
+
+    </div>
+    <div class="row">
+        <form asp-action="CreateComment" asp-controller="Shop">
+            <input name="Id" value="@Model.Goods.Id" />
+            <input name="Text" />
+            <input type="submit" value="Comment"/>
+        </form>
+    </div>
+    @if(Model.Comments.Count > 0) {
+        foreach(CommentModel comment in Model.Comments)
+                {
+<div class="row">
+    <p>@comment.UserName</p>
+    <p>@comment.CommentText</p>
+    <p>@comment.Date</p>
+    @if(User.IsInRole("admin")) { 
+        <a asp-action="DeleteComment" asp-controller="Shop" asp-route-Id="@comment.Id">Delete</a>
+    }
+</div>
+                }
+    }
+
+</div>

@@ -3,12 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WeedStore.Models.Order;
+using WeedStore.Models.Goods;
 
 namespace WeedStore.MediatR.Query
 {
-    public class GetOrdersQuery:IRequest<List<OrderModel>>
+    public class GetCategoriesQuery:IRequest<List<CategoryModel>>
     {
-      
+        
     }
 }

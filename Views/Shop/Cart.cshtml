@@ -13,6 +13,9 @@
                     <div class="col">
                         @goods.Price
                     </div>
+                    <div class="col">
+                        <a asp-action="DeleteFromCart" asp-controller="Shop" asp-route-id="@goods.Id">Delete</a>
+                    </div>
                 </div>
             }
         </div>

@@ -83,5 +83,13 @@ namespace WeedStore.Controllers
             var result = await _mediator.Send(command);
             return View(result);
         }
+        [HttpPost]
+        public async Task<IActionResult>ChangeOrderStatus([FromForm] string  Id, string Status)
+        {
+            
+            var command = new ChangeOrderStatusCommand(Guid.Parse(Id), Status);
+            await _mediator.Send(command);
+            return Redirect($"/Shop/OrderDetails/{Id}");
+        }
     }
 }

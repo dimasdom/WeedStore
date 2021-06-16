@@ -13,8 +13,15 @@ namespace WeedStore.MediatR.Handler
     public class GetOrdersHandler : IRequestHandler<GetOrdersQuery, List<OrderModel>>
     {
         private readonly WeedStoreContext _context;
+
+        public GetOrdersHandler(WeedStoreContext context)
+        {
+            _context = context;
+        }
+
         public async Task<List<OrderModel>> Handle(GetOrdersQuery request, CancellationToken cancellationToken)
         {
+
             var Orders =  _context.Orders.ToList();
             return Orders;
 

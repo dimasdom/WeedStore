@@ -1,13 +1,16 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WeedStore.MediatR.Command;
 using WeedStore.MediatR.Query;
+using WeedStore.Models.DTOs;
 using WeedStore.Models.Goods;
+using WeedStore.Models.Order;
 
 namespace WeedStore.Controllers
 {
@@ -23,19 +26,32 @@ namespace WeedStore.Controllers
 
        
         [HttpGet]
-        public  IActionResult Goods()
+        public async Task<IActionResult> Goods()
         {
             
                 var command = new GetGoodsQuery();
                 var response = _mediator.Send(command);
-
-                return View(response.Result);
+            var query = new GetCategoriesQuery();
+            var categories = await  _mediator.Send(query);
+            ViewBag.Categories = new SelectList(categories, "Id", "Name");
+            return View(response.Result);
          
             
         }
-        [HttpGet]
-        public IActionResult Create()
+        [HttpPost]
+        public async Task<IActionResult> Goods([FromForm]string Id,string Min, string Max)
         {
+            var command = new GetGoodsWithParamsQuery(Id, Min, Max);
+            var goods = await _mediator.Send(command);
+            
+            return View("Goods", goods);
+        }
+        [HttpGet]
+        public async  Task<IActionResult> Create()
+        {
+            var query = new GetCategoriesQuery();
+            var categories = await _mediator.Send(query);
+            ViewBag.Categories = new SelectList(categories, "Id", "Name"); 
             if (User.IsInRole("admin"))
             {
                 return View();
@@ -59,8 +75,8 @@ namespace WeedStore.Controllers
             public async Task<IActionResult> Edit(Guid Id)
         {
             var query = new GetSingleGoodsQuery(Id);
-            var result = _mediator.Send(query);
-           return View(result.Result);
+            var result = await _mediator.Send(query);
+            return View(result);
         }
         [HttpPost]
         public async Task<IActionResult> Edit(Guid Id,[FromForm] GoodsModel Goods)
@@ -98,6 +114,52 @@ namespace WeedStore.Controllers
             var result = await _mediator.Send(command);
             return RedirectToAction("Index", "Home");
         }
-        
+        [HttpPost]
+        public async Task<IActionResult> CreateCategory([FromForm] string Name)
+        {
+            var command = new CreateNewCategoryCommand(Name);
+            var result = await _mediator.Send(command);
+            return RedirectToAction("Create", "Shop");
+        }
+        [HttpGet]
+        public async Task<IActionResult> OrderDetails(Guid Id)
+        {
+            var query = new GetOrderDetailsQuery(Id);
+            var orderDetails = await _mediator.Send(query);
+           
+
+            return View(orderDetails);
+        }
+        [HttpGet]
+        public async Task<IActionResult> DeleteGoods(Guid Id)
+        {
+            var command = new DeleteGoodsCommand(Id);
+            var result = await _mediator.Send(command);
+            return RedirectToAction("Goods", "Shop");
+        }
+        [HttpGet]
+        public async Task<IActionResult> Product(Guid Id)
+        {
+            var command = new GetSingleGoodsQuery(Id);
+            var goods = await _mediator.Send(command);
+            var command2 = new GetCommentsQuery(Id);
+            var comments = await _mediator.Send(command2);
+            ProductModel product = new ProductModel { Comments = comments, Goods = goods };
+            return View(product);
+        }
+        [HttpGet]
+        public async Task<IActionResult> DeleteComment(Guid Id)
+        {
+            var command = new DeleteCommentCommand(Id);
+            await _mediator.Send(command);
+            return Ok();
+        }
+        [HttpPost]
+        public IActionResult CreateComment([FromForm]string Id,string Text)
+        {
+            var command = new CreateCommentCommand(User.Identity.Name,Guid.Parse(Id),Text);
+            _mediator.Send(command);
+            return Redirect($"/Shop/Product/{Id}");
+        }
     }
 }

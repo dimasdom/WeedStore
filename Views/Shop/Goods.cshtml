@@ -2,20 +2,37 @@
 @model List<GoodsModel> 
 <div class="container">
     <div class="row">
-        @foreach(GoodsModel goods in Model)
+        <form asp-action="Goods" asp-controller="Shop" method="post">
+            <select class="custom-select" name="Id" asp-items="ViewBag.Categories"></select>
+            <input name="Min" />
+            <input name="Max" />
+            <input type="submit" value="Search" />
+        </form>
+    </div>
+    <div class="row">
+        
+        @foreach (GoodsModel goods in Model)
+        {
+            if (goods.Count > 0)
             {
-                <div class="col-3">
-                    <img src="@goods.Image" />
-                    <p>@goods.Name</p>
-                    <p>@goods.Price</p>
-                    @if (User.IsInRole("admin"))
-                {
-                    <a asp-action="Edit" asp-controller="Shop" asp-route-id="@goods.Id">Edit</a>
-                }
-                    <a asp-action="AddToCart" asp-controller="Shop" asp-route-id="@goods.Id">
-                        Add To Cart
+        <div class="col-4">
+            <div class="card" style="width: 18rem;">
+                <img src="@goods.Image" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <a asp-action="Product" asp-controller="Shop" asp-route-id="@goods.Id">
+                        <h5 class="card-title">@goods.Name</h5>
                     </a>
+                    <p class="card-text">Price : @goods.Price</p>
+                    @if (User.IsInRole("admin"))
+                    {
+                        <a asp-action="Edit" asp-controller="Shop" asp-route-id="@goods.Id" class="btn btn-danger">Edit</a>
+                    }
+                    <a asp-action="AddToCart" asp-controller="Shop" asp-route-id="@goods.Id" class="btn btn-primary">Add To Cart</a>
                 </div>
+            </div>
+        </div>
             }
+
+        }
     </div>
 </div>

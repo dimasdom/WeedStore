@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,19 +10,19 @@ using WeedStore.Models.Goods;
 
 namespace WeedStore.MediatR.Handler
 {
-    public class GetGoodsHandler : IRequestHandler<GetGoodsQuery, List<GoodsModel>>
+    public class GetCategoriesHandler : IRequestHandler<GetCategoriesQuery, List<CategoryModel>>
     {
         private readonly WeedStoreContext _context;
 
-        public GetGoodsHandler(WeedStoreContext context)
+        public GetCategoriesHandler(WeedStoreContext context)
         {
             _context = context;
         }
 
-        public  async Task<List<GoodsModel>> Handle(GetGoodsQuery request, CancellationToken cancellationToken)
+        public async Task<List<CategoryModel>> Handle(GetCategoriesQuery request, CancellationToken cancellationToken)
         {
-           
-            return  _context.Goods.ToList();
+            var categories =  _context.Categories.ToList();
+            return categories;
         }
     }
 }
