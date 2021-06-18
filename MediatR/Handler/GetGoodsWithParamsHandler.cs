@@ -21,7 +21,7 @@ namespace WeedStore.MediatR.Handler
 
         public async Task<List<GoodsModel>> Handle(GetGoodsWithParamsQuery request, CancellationToken cancellationToken)
         {
-            if (request.CategoryId != null)
+            if (request.CategoryId != "feebf306-793f-4525-c992-08d93175e7fb")
             {
                 if (request.MaxPrice != null || request.MinPrice != null)
                 {
@@ -45,7 +45,7 @@ namespace WeedStore.MediatR.Handler
             {
                 if (request.MaxPrice != null && request.MinPrice != null)
                 {
-                    return _context.Goods.Where(x => x.CategoryId == Guid.Parse(request.CategoryId) && x.Price < Int32.Parse(request.MaxPrice) && x.Price > Int32.Parse(request.MinPrice)).ToList();
+                    return _context.Goods.Where(x => x.Price < Int32.Parse(request.MaxPrice) && x.Price > Int32.Parse(request.MinPrice)).ToList();
                 }
                 if (request.MaxPrice != null)
                 {
@@ -57,7 +57,7 @@ namespace WeedStore.MediatR.Handler
                 }
                
             }
-            return null;
+            return _context.Goods.ToList();
         }
     }
 }

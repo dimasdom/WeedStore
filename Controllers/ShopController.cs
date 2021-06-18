@@ -39,11 +39,28 @@ namespace WeedStore.Controllers
             
         }
         [HttpPost]
-        public async Task<IActionResult> Goods([FromForm]string Id,string Min, string Max)
+        public async Task<IActionResult> Goods([FromForm]string Id,string Min, string Max,string Sort)
         {
             var command = new GetGoodsWithParamsQuery(Id, Min, Max);
             var goods = await _mediator.Send(command);
-            
+            switch (Sort)
+            {
+                case "low":
+                    goods = (from x in goods
+                             orderby x.Price 
+                             select x).ToList();
+                    break;
+                case "high":
+                    goods = (from x in goods
+                             orderby x.Price descending
+                             select x).ToList();
+                    break;
+               
+            }
+           
+            var query = new GetCategoriesQuery();
+            var categories = await _mediator.Send(query);
+            ViewBag.Categories = new SelectList(categories, "Id", "Name");
             return View("Goods", goods);
         }
         [HttpGet]
@@ -161,5 +178,25 @@ namespace WeedStore.Controllers
             _mediator.Send(command);
             return Redirect($"/Shop/Product/{Id}");
         }
+        //[HttpGet]
+        //public async Task<IActionResult> GetGoodsByHigh()
+        //{
+        //    var command = new GetGoodsQuery();
+        //    var goods = await _mediator.Send(command);
+        //    goods = (from x in goods
+        //            orderby x.Price descending
+        //            select x).ToList();
+        //    return View("Goods");
+        //}
+        //[HttpGet]
+        //public async Task<IActionResult> GetGoodsByLow()
+        //{
+        //    var command = new GetGoodsQuery();
+        //    var goods = await _mediator.Send(command);
+        //    goods = (from x in goods
+        //             orderby x.Price
+        //             select x).ToList();
+        //    return View("Goods");
+        //}
     }
 }
