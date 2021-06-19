@@ -63,6 +63,7 @@ namespace WeedStore.Controllers
             ViewBag.Categories = new SelectList(categories, "Id", "Name");
             return View("Goods", goods);
         }
+        [Authorize(Roles = "admin")]
         [HttpGet]
         public async  Task<IActionResult> Create()
         {
@@ -75,6 +76,7 @@ namespace WeedStore.Controllers
             }
             return NotFound();
         }
+        [Authorize(Roles = "admin")]
         [HttpPost]
      
         public IActionResult Create([FromForm] GoodsModel Goods)
@@ -88,6 +90,7 @@ namespace WeedStore.Controllers
             return NotFound();
 
         }
+        [Authorize(Roles = "admin")]
         [HttpGet]
             public async Task<IActionResult> Edit(Guid Id)
         {
@@ -95,6 +98,7 @@ namespace WeedStore.Controllers
             var result = await _mediator.Send(query);
             return View(result);
         }
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public async Task<IActionResult> Edit(Guid Id,[FromForm] GoodsModel Goods)
         {
@@ -131,12 +135,30 @@ namespace WeedStore.Controllers
             var result = await _mediator.Send(command);
             return RedirectToAction("Index", "Home");
         }
+        [Authorize(Roles = "admin")]
+        [HttpGet]
+        public async Task<IActionResult> Categories()
+        {
+            var query = new GetCategoriesQuery();
+            var categories = await _mediator.Send(query);
+            return View(categories);
+        }
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public async Task<IActionResult> CreateCategory([FromForm] string Name)
         {
             var command = new CreateNewCategoryCommand(Name);
             var result = await _mediator.Send(command);
-            return RedirectToAction("Create", "Shop");
+            return RedirectToAction("Categories", "Shop");
+        }
+        [Authorize(Roles = "admin")]
+        [HttpGet]
+        public async Task<IActionResult> DeleteCategory(string Id)
+        {
+            var command = new DeleteCategoryCommand(Id);
+            await _mediator.Send(command);
+
+            return RedirectToAction("Categories", "Shop");
         }
         [HttpGet]
         public async Task<IActionResult> OrderDetails(Guid Id)
@@ -147,6 +169,7 @@ namespace WeedStore.Controllers
 
             return View(orderDetails);
         }
+        [Authorize(Roles = "admin")]
         [HttpGet]
         public async Task<IActionResult> DeleteGoods(Guid Id)
         {
@@ -164,6 +187,7 @@ namespace WeedStore.Controllers
             ProductModel product = new ProductModel { Comments = comments, Goods = goods };
             return View(product);
         }
+        [Authorize(Roles = "admin")]
         [HttpGet]
         public async Task<IActionResult> DeleteComment(Guid Id)
         {

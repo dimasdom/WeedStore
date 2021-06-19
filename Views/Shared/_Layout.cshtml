@@ -6,6 +6,12 @@
     <title>@ViewData["Title"] - WeedStore</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <style>
+        body {
+            
+            background-image: url('file:///C:\Users\badas\source\repos\WeedStore\wwwroot\css\back.jpg');
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -21,9 +27,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Shop" asp-action="Goods">Shop</a>
                         </li>
@@ -38,16 +42,16 @@
                         {
 
                             <li class="nav-item">
-                                <a class="nav-link text-dark float-right" asp-area="" asp-controller="Shop" asp-action="Create">Control</a>
+                                <a class="nav-link text-dark " asp-area="" asp-controller="Admin" asp-action="Index">Admin</a>
                             </li>
 
                         }
                         @if (User.Identity.IsAuthenticated)
                         {
                             
-                                <div class="dropdown">
+                                <div class="dropdown float-right">
                                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Account
+                                        @User.Identity.Name
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         <a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="MyAccount">MyAccount</a>

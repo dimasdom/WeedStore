@@ -1,6 +1,22 @@
 ﻿@model WeedStore.Models.User.UserModel
 
-<div>
-    <p>@Model.Email</p>
-    <p>@Model.First_name</p>
-</div> 
+<div class="container m-auto">
+    <ul class="list-group m-auto">
+        <li class="list-group-item m-1">
+            @Model.First_name
+        </li>
+        <li class="list-group-item m-1">
+            @Model.Second_name
+        </li>
+        <li class="list-group-item m-1">
+            @Model.UserName
+        </li>
+        <li class="list-group-item m-1">
+            @Model.Email
+        </li>
+        <li class="list-group-item m-1">
+            @Model.Address
+        </li>
+
+    </ul>
+</div>

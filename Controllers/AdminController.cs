@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using WeedStore.Models.DTOs;
 
 namespace WeedStore.Controllers
 {
+    [Authorize(Roles ="admin")]
     public class AdminController : Controller
     {
         private readonly IMediator _mediator;

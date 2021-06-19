@@ -4,7 +4,7 @@
     <p class="text-center display-4">@Model.Goods.Name</p>
     <div class="row">
         <div class="col-6">
-            <img class="rounded shadow-lg" src="@Model.Goods.Image"/>
+            <img class="rounded shadow-lg" src="@Model.Goods.Image" />
         </div>
         <div class="col-6">
             <p>@Model.Goods.Name</p>
@@ -15,25 +15,49 @@
         </div>
 
     </div>
-    <div class="row">
+    <div class="row p-4 m-4 ">
         <form asp-action="CreateComment" asp-controller="Shop">
-            <input name="Id" value="@Model.Goods.Id" />
-            <input name="Text" />
-            <input type="submit" value="Comment"/>
+            <div class="col-1" style="visibility:hidden">
+                <input name="Id" value="@Model.Goods.Id" />
+            </div>
+            <div class="col">
+                <input class="input-group-text" name="Text" />
+            </div>
+            <div class="col">
+                <input class="btn btn-primary" type="submit" value="Comment" />
+            </div>
+
+
+
         </form>
     </div>
-    @if(Model.Comments.Count > 0) {
-        foreach(CommentModel comment in Model.Comments)
-                {
-<div class="row">
-    <p>@comment.UserName</p>
-    <p>@comment.CommentText</p>
-    <p>@comment.Date</p>
-    @if(User.IsInRole("admin")) { 
-        <a asp-action="DeleteComment" asp-controller="Shop" asp-route-Id="@comment.Id">Delete</a>
-    }
-</div>
-                }
-    }
+    <div class="mt-4 m-auto">
+        @if (Model.Comments.Count > 0)
+        {
+            foreach (CommentModel comment in Model.Comments)
+            {
+                <div class="row p-2 m-2 border rounded">
+                    <div class="col">
+                        <p>@comment.UserName</p>
+                    </div>
+                    <div class="col">
+                        <p>@comment.CommentText</p>
+                    </div>
+                    <div class="col">
+                        <p>@comment.Date</p>
+                    </div>
 
+
+                   
+                    @if (User.IsInRole("admin"))
+                    {
+                        <div class="col">
+                            <a asp-action="DeleteComment" asp-controller="Shop" asp-route-Id="@comment.Id">Delete</a>
+                        </div>
+
+                    }
+                </div>
+            }
+        }
+    </div>
 </div>

@@ -54,13 +54,15 @@ button.accept-policy {
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
+    background-image: url('file:///C:\Users\badas\source\repos\WeedStore\wwwroot\css\back.jpg');
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+    background-image: url('file:///C:\Users\badas\source\repos\WeedStore\wwwroot\css\back.jpg');
 }
 .footer {
   position: absolute;
@@ -69,3 +71,7 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+.testclass{
+    height:100px;
+}
+

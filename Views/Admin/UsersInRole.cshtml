@@ -14,18 +14,24 @@
     @foreach (UserModel user in Model)
     {
 <form asp-action="DeleteUserFromRole" asp-controller="Admin" method="post">
-    <div class="row">
-        <div class="col-4">
+
+    
+
+    <div class="row p-4 m-4 border shadow">
+        <div class="col-">
             <input name="UserId" value="@user.Id" disabled />
+            
+        </div>
+        <div class="col ">
             <input name="RoleName" value="@ViewBag.RoleName" disabled />
         </div>
-        <div class="col-4">
+        <div class="col">
             <p>
                 @user.UserName
-                
+
             </p>
         </div>
-        <div class="col-4">
+        <div class="col-">
             <input type="submit" value="Delete From Role" class="btn btn-danger" />
         </div>
     </div>

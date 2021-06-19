@@ -91,14 +91,14 @@ namespace WeedStore.Controllers
             //}
             //return NotFound("Ivalid Data");
         }
-        [HttpPost]
-        public async Task<IActionResult> AddToAdmin([FromForm]string Id)
-        {
-            var user = await _userManager.FindByIdAsync(Id);
-            await _userManager.AddToRoleAsync(user, "admin");
-            return Ok();
+        //[HttpPost]
+        //public async Task<IActionResult> AddToAdmin([FromForm]string Id)
+        //{
+        //    var user = await _userManager.FindByIdAsync(Id);
+        //    await _userManager.AddToRoleAsync(user, "admin");
+        //    return Ok();
             
-        }
+        //}
         [Authorize]
         [HttpGet]
         public async Task<IActionResult>MyAccount()
@@ -107,6 +107,7 @@ namespace WeedStore.Controllers
 
             return View(AccountUser);
         }
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> MyOrders()
         {
@@ -114,6 +115,7 @@ namespace WeedStore.Controllers
             var result = await _mediator.Send(query);
             return View(result);
         }
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> LogOut()
         {

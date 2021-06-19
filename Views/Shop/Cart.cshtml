@@ -3,10 +3,10 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-8">
+        <div class="col-12 col-lg-8">
             @foreach(GoodsModel goods in Model)
             {
-                <div class="row">
+                <div class="row mt-2">
                     <div class="col">
                         @goods.Name
                     </div>
@@ -19,10 +19,16 @@
                 </div>
             }
         </div>
-        <div class="col-4">
+        <div class="col-12 col-lg-4 mt-4">
             <form asp-action="MakeOrder" asp-controller="Shop" method="post">
-                <input name="Address" value=""/>
-                <input type="submit" value="Make Order"/>
+                <div class="input-group">
+                    <input class="input-group-text" name="Address" value="" />
+                </div>
+                <div class="input-group">
+                    <input class="btn btn-primary" type="submit" value="Make Order" />
+                </div>
+
+                
             </form>
         </div>
     </div>
