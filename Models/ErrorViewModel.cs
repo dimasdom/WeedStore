@@ -1,5 +1,3 @@
-using System;
-
 namespace WeedStore.Models
 {
     public class ErrorViewModel

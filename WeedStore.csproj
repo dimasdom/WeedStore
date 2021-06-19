@@ -26,4 +26,8 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.6" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="MediatR\Handler\Account\Roles\" />
+  </ItemGroup>
+
 </Project>

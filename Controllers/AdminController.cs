@@ -2,8 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using WeedStore.MediatR.Command;
 using WeedStore.MediatR.Query;
@@ -11,7 +9,7 @@ using WeedStore.Models.DTOs;
 
 namespace WeedStore.Controllers
 {
-    [Authorize(Roles ="admin")]
+    [Authorize(Roles = "admin")]
     public class AdminController : Controller
     {
         private readonly IMediator _mediator;
@@ -38,7 +36,7 @@ namespace WeedStore.Controllers
         public async Task<IActionResult> AddRole(string RoleName)
         {
             var command = new AddRoleCommand(RoleName);
-            var result =  await _mediator.Send(command);
+            var result = await _mediator.Send(command);
             return RedirectToAction("Roles", "Admin");
         }
         [HttpGet]
@@ -49,7 +47,7 @@ namespace WeedStore.Controllers
             return RedirectToAction("Roles", "Admin");
         }
         [HttpGet]
-        public async Task<IActionResult> UsersInRole( string Id)
+        public async Task<IActionResult> UsersInRole(string Id)
         {
             var command = new GetUsersInRoleQuery(Id);
             var result = await _mediator.Send(command);
@@ -65,9 +63,9 @@ namespace WeedStore.Controllers
 
         }
         [HttpPost]
-        public async Task<IActionResult> AddUserToRole([FromForm]UserRoleDTOs data)
+        public async Task<IActionResult> AddUserToRole([FromForm] UserRoleDTOs data)
         {
-            var command = new AddUserToRoleCommand(data.UserName,data.RoleName);
+            var command = new AddUserToRoleCommand(data.UserName, data.RoleName);
             var result = await _mediator.Send(command);
             return Redirect($"/Admin/UsersInRole/{data.RoleName}");
         }
@@ -86,9 +84,9 @@ namespace WeedStore.Controllers
             return View(result);
         }
         [HttpPost]
-        public async Task<IActionResult>ChangeOrderStatus([FromForm] string  Id, string Status)
+        public async Task<IActionResult> ChangeOrderStatus([FromForm] string Id, string Status)
         {
-            
+
             var command = new ChangeOrderStatusCommand(Guid.Parse(Id), Status);
             await _mediator.Send(command);
             return Redirect($"/Shop/OrderDetails/{Id}");

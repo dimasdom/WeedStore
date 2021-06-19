@@ -6,10 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 using WeedStore.Models.Context;
 using WeedStore.Models.User;
-using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace WeedStore
 {
@@ -70,7 +68,7 @@ namespace WeedStore
 
             app.UseAuthentication();    // аутентификация
             app.UseAuthorization();     // авторизация
-            
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

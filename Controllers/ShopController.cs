@@ -3,18 +3,16 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WeedStore.MediatR.Command;
 using WeedStore.MediatR.Query;
 using WeedStore.Models.DTOs;
 using WeedStore.Models.Goods;
-using WeedStore.Models.Order;
 
 namespace WeedStore.Controllers
 {
-   
+
     public class ShopController : Controller
     {
         private IMediator _mediator;
@@ -24,22 +22,22 @@ namespace WeedStore.Controllers
             _mediator = mediator;
         }
 
-       
+
         [HttpGet]
         public async Task<IActionResult> Goods()
         {
-            
-                var command = new GetGoodsQuery();
-                var response = _mediator.Send(command);
+
+            var command = new GetGoodsQuery();
+            var response = _mediator.Send(command);
             var query = new GetCategoriesQuery();
-            var categories = await  _mediator.Send(query);
+            var categories = await _mediator.Send(query);
             ViewBag.Categories = new SelectList(categories, "Id", "Name");
             return View(response.Result);
-         
-            
+
+
         }
         [HttpPost]
-        public async Task<IActionResult> Goods([FromForm]string Id,string Min, string Max,string Sort)
+        public async Task<IActionResult> Goods([FromForm] string Id, string Min, string Max, string Sort)
         {
             var command = new GetGoodsWithParamsQuery(Id, Min, Max);
             var goods = await _mediator.Send(command);
@@ -47,7 +45,7 @@ namespace WeedStore.Controllers
             {
                 case "low":
                     goods = (from x in goods
-                             orderby x.Price 
+                             orderby x.Price
                              select x).ToList();
                     break;
                 case "high":
@@ -55,9 +53,9 @@ namespace WeedStore.Controllers
                              orderby x.Price descending
                              select x).ToList();
                     break;
-               
+
             }
-           
+
             var query = new GetCategoriesQuery();
             var categories = await _mediator.Send(query);
             ViewBag.Categories = new SelectList(categories, "Id", "Name");
@@ -65,11 +63,11 @@ namespace WeedStore.Controllers
         }
         [Authorize(Roles = "admin")]
         [HttpGet]
-        public async  Task<IActionResult> Create()
+        public async Task<IActionResult> Create()
         {
             var query = new GetCategoriesQuery();
             var categories = await _mediator.Send(query);
-            ViewBag.Categories = new SelectList(categories, "Id", "Name"); 
+            ViewBag.Categories = new SelectList(categories, "Id", "Name");
             if (User.IsInRole("admin"))
             {
                 return View();
@@ -78,7 +76,7 @@ namespace WeedStore.Controllers
         }
         [Authorize(Roles = "admin")]
         [HttpPost]
-     
+
         public IActionResult Create([FromForm] GoodsModel Goods)
         {
             if (User.IsInRole("admin"))
@@ -92,7 +90,7 @@ namespace WeedStore.Controllers
         }
         [Authorize(Roles = "admin")]
         [HttpGet]
-            public async Task<IActionResult> Edit(Guid Id)
+        public async Task<IActionResult> Edit(Guid Id)
         {
             var query = new GetSingleGoodsQuery(Id);
             var result = await _mediator.Send(query);
@@ -100,19 +98,19 @@ namespace WeedStore.Controllers
         }
         [Authorize(Roles = "admin")]
         [HttpPost]
-        public async Task<IActionResult> Edit(Guid Id,[FromForm] GoodsModel Goods)
+        public async Task<IActionResult> Edit(Guid Id, [FromForm] GoodsModel Goods)
         {
             Goods.Id = Id;
             var command = new EditGoodsCommand(Goods);
             await _mediator.Send(command);
-            return RedirectToAction("Goods","Shop");
+            return RedirectToAction("Goods", "Shop");
         }
         [HttpGet]
         public async Task<IActionResult> AddToCart(string Id)
         {
-            var command = new AddToCartCommand(User.Identity.Name,Id);
+            var command = new AddToCartCommand(User.Identity.Name, Id);
             var result = await _mediator.Send(command);
-            return RedirectToAction("Goods","Shop");
+            return RedirectToAction("Goods", "Shop");
         }
         [HttpGet]
         public async Task<IActionResult> Cart()
@@ -124,14 +122,14 @@ namespace WeedStore.Controllers
         [HttpGet]
         public async Task<IActionResult> DeleteFromCart(string Id)
         {
-            var command = new DeleteGoodsFromCartCommand(User.Identity.Name,Id);
+            var command = new DeleteGoodsFromCartCommand(User.Identity.Name, Id);
             var result = await _mediator.Send(command);
             return RedirectToAction("Cart", "Shop");
         }
         [HttpPost]
-        public async Task<IActionResult> MakeOrder([FromForm]string Address)
+        public async Task<IActionResult> MakeOrder([FromForm] string Address)
         {
-            var command = new MakeOrderCommand(User.Identity.Name,Address);
+            var command = new MakeOrderCommand(User.Identity.Name, Address);
             var result = await _mediator.Send(command);
             return RedirectToAction("Index", "Home");
         }
@@ -165,7 +163,7 @@ namespace WeedStore.Controllers
         {
             var query = new GetOrderDetailsQuery(Id);
             var orderDetails = await _mediator.Send(query);
-           
+
 
             return View(orderDetails);
         }
@@ -196,9 +194,9 @@ namespace WeedStore.Controllers
             return Ok();
         }
         [HttpPost]
-        public IActionResult CreateComment([FromForm]string Id,string Text)
+        public IActionResult CreateComment([FromForm] string Id, string Text)
         {
-            var command = new CreateCommentCommand(User.Identity.Name,Guid.Parse(Id),Text);
+            var command = new CreateCommentCommand(User.Identity.Name, Guid.Parse(Id), Text);
             _mediator.Send(command);
             return Redirect($"/Shop/Product/{Id}");
         }

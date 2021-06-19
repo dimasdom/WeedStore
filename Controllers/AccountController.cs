@@ -1,16 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using WeedStore.MediatR.Command;
-using WeedStore.Models.DTOs;
-using MediatR;
-using WeedStore.Models.User;
-
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Authorization;
 using WeedStore.MediatR.Query;
+using WeedStore.Models.DTOs;
+using WeedStore.Models.User;
 
 namespace WeedStore.Controllers
 {
@@ -74,7 +70,7 @@ namespace WeedStore.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult>Login([FromForm] UserLoginDTOs userLoginDTOs)
+        public async Task<IActionResult> Login([FromForm] UserLoginDTOs userLoginDTOs)
         {
             var user = await _userManager.FindByEmailAsync(userLoginDTOs.Email);
             var result = await _signInManager.PasswordSignInAsync(user.UserName, userLoginDTOs.Password, false, false);
@@ -82,7 +78,7 @@ namespace WeedStore.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-             return NotFound("Ivalid Data"); ;
+            return NotFound("Ivalid Data"); ;
             //var command = new UserLoginCommand(userLoginDTOs);
             //var result = _mediatR.Send(command);
             //if (result.Result != null)
@@ -97,11 +93,11 @@ namespace WeedStore.Controllers
         //    var user = await _userManager.FindByIdAsync(Id);
         //    await _userManager.AddToRoleAsync(user, "admin");
         //    return Ok();
-            
+
         //}
         [Authorize]
         [HttpGet]
-        public async Task<IActionResult>MyAccount()
+        public async Task<IActionResult> MyAccount()
         {
             var AccountUser = await _userManager.FindByNameAsync(User.Identity.Name);
 
@@ -123,6 +119,6 @@ namespace WeedStore.Controllers
             await _mediator.Send(command);
             return RedirectToAction("Index", "Home");
         }
-       
+
     }
 }

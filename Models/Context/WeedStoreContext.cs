@@ -1,14 +1,14 @@
-﻿using WeedStore.Models.User;
-using WeedStore.Models.Goods;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using WeedStore.Models.Goods;
 using WeedStore.Models.Order;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using WeedStore.Models.User;
 
 namespace WeedStore.Models.Context
 {
-    public class WeedStoreContext:IdentityDbContext<UserModel>
+    public class WeedStoreContext : IdentityDbContext<UserModel>
     {
-        public WeedStoreContext(DbContextOptions<WeedStoreContext> options): base(options)
+        public WeedStoreContext(DbContextOptions<WeedStoreContext> options) : base(options)
         {
         }
 
